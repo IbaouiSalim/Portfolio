@@ -22,30 +22,6 @@ export const PROJECTS = [
     type: "Web Design",
     link: "https://github.com/IbaouiSalim",
     featured: false
-  },
-  {
-    title: "Algorithm Visualizer",
-    description: "Interactive platform for visualizing complex algorithms including sorting, pathfinding, and graph traversal with real-time step-through execution.",
-    tags: ["React", "TypeScript", "Algorithms", "D3.js"],
-    type: "Educational",
-    link: "https://github.com/IbaouiSalim",
-    featured: false
-  },
-  {
-    title: "Microservices Architecture",
-    description: "Enterprise-level microservices implementation using Spring Boot with Docker orchestration, API Gateway, and distributed tracing.",
-    tags: ["Spring Boot", "Docker", "Kubernetes", "PostgreSQL"],
-    type: "Backend / DevOps",
-    link: "https://github.com/IbaouiSalim",
-    featured: false
-  },
-  {
-    title: "Real-time Chat Application",
-    description: "Full-stack chat application with WebSocket integration, message persistence, and user authentication. Includes mobile-responsive UI.",
-    tags: ["Node.js", "React", "WebSocket", "MongoDB"],
-    type: "Full-Stack",
-    link: "https://github.com/IbaouiSalim",
-    featured: false
   }
 ];
 
