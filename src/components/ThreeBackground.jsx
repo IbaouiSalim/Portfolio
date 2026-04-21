@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 const ThreeBackground = ({ isLoaded = true }) => {
   const mountRef = useRef(null);
   const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (!isLoaded || !mountRef.current) return;
@@ -27,13 +28,17 @@ const ThreeBackground = ({ isLoaded = true }) => {
         renderer = new THREE.WebGLRenderer({ 
           antialias: true, 
           alpha: true,
-          powerPreference: 'high-performance'
+          powerPreference: 'high-performance',
+          failIfMajorPerformanceCaveat: false
         });
         
         renderer.setSize(width, height);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setClearColor(0x070708, 0);
-        mountRef.current.appendChild(renderer.domElement);
+        
+        if (mountRef.current) {
+          mountRef.current.appendChild(renderer.domElement);
+        }
 
         // Create particles
         const particlesGeometry = new THREE.BufferGeometry();
@@ -71,6 +76,7 @@ const ThreeBackground = ({ isLoaded = true }) => {
 
         // Animation loop
         const animate = () => {
+          if (!particlesMesh || !object) return;
           particlesMesh.rotation.y += 0.0008;
           object.rotation.y += 0.0015;
           object.rotation.x += 0.001;
@@ -96,13 +102,16 @@ const ThreeBackground = ({ isLoaded = true }) => {
         return () => {
           window.removeEventListener('resize', handleResize);
         };
-      } catch (error) {
-        console.error('Three.js initialization error:', error);
+      } catch (err) {
+        console.error('Three.js initialization error:', err);
+        setError(err.message);
       }
     };
 
     script.onerror = () => {
-      console.error('Failed to load Three.js');
+      const errorMsg = 'Failed to load Three.js from CDN';
+      console.error(errorMsg);
+      setError(errorMsg);
     };
 
     document.head.appendChild(script);
@@ -122,7 +131,7 @@ const ThreeBackground = ({ isLoaded = true }) => {
   return (
     <div 
       ref={mountRef} 
-      className="absolute inset-0 z-0 pointer-events-none"
+      className="absolute inset-0 z-0 pointer-events-none bg-gradient-to-br from-indigo-950/20 to-transparent"
       aria-label="3D background animation"
     />
   );
